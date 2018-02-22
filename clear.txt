@@ -1,0 +1,56 @@
+Sub 清算()
+
+    Sheets.Add After:=Sheets(Sheets.Count)
+    Sheets("Sheet1").Name = "清算"
+    Range("A1").Select
+    ActiveCell.FormulaR1C1 = "序号"
+    Range("B1").Select
+    ActiveCell.FormulaR1C1 = "供电局"
+    Range("C1").Select
+    ActiveCell.FormulaR1C1 = "户名"
+    Range("D1").Select
+    ActiveCell.FormulaR1C1 = "电量"
+    Range("E1").Select
+    ActiveCell.FormulaR1C1 = "电价"
+    Range("F1").Select
+    ActiveCell.FormulaR1C1 = "电费"
+    Columns("B:B").ColumnWidth = 15.13
+    Columns("C:C").ColumnWidth = 15.63
+    Dim sheet1 As Worksheet
+    Dim sheet2 As Worksheet
+    Set sheet1 = Worksheets("清算")
+    Set sheet2 = Worksheets("sheet2")
+    Dim rowNum
+    rowNum = sheet2.Range("A65536").End(xlUp).Row
+    
+    Dim a, b, c As Double
+    Dim name1
+    Dim name2
+    Dim j
+    j = 2
+    For i = 3 To rowNum
+      name1 = sheet2.Cells(i, 3)
+      name2 = sheet2.Cells(i + 1, 3)
+      a = sheet2.Cells(i, 5)
+      b = sheet2.Cells(i, 6)
+      c = sheet2.Cells(i, 7)
+      
+      While name1 = name2
+         a = a + sheet2.Cells(i + 1, 5)
+         c = c + sheet2.Cells(i + 1, 7)
+         i = i + 1
+         name2 = sheet2.Cells(i + 1, 3)
+      Wend
+      
+      sheet1.Cells(j, 1) = j - 1
+      sheet1.Cells(j, 2) = "中山供电局"
+      sheet1.Cells(j, 3) = name1
+      sheet1.Cells(j, 4) = a
+      sheet1.Cells(j, 5) = b
+      sheet1.Cells(j, 6) = c
+      j = j + 1
+    Next
+    
+End Sub
+
+

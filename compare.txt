@@ -1,0 +1,334 @@
+Sub 比对更新()
+
+End Sub
+Sub 比对新()
+'
+' 比对新 宏
+'
+
+'
+    Sheets.Add After:=Sheets(Sheets.Count)
+    Sheets("Sheet1").Name = "比对"
+    Range("B1").Select
+    ActiveCell.FormulaR1C1 = "序号"
+    Range("C1").Select
+    ActiveCell.FormulaR1C1 = "社区（村）"
+    Range("D1").Select
+    ActiveCell.FormulaR1C1 = "户名 姓名"
+    Range("E1").Select
+    ActiveCell.FormulaR1C1 = "性别"
+    Range("F1").Select
+    ActiveCell.FormulaR1C1 = "身份证号码"
+    Range("G1").Select
+    ActiveCell.FormulaR1C1 = "地址"
+    Range("H1").Select
+    ActiveCell.FormulaR1C1 = "证号"
+    Range("I1").Select
+    ActiveCell.FormulaR1C1 = "身份证匹配检查"
+    Range("J1").Select
+    ActiveCell.FormulaR1C1 = "系统有效期"
+    Range("K1").Select
+    ActiveCell.FormulaR1C1 = "营销系统证件名称检查"
+    Range("L1").Select
+    ActiveCell.FormulaR1C1 = "名字检查"
+    Range("M1").Select
+    ActiveCell.FormulaR1C1 = "处理结果"
+    Range("N1").Select
+    ActiveCell.FormulaR1C1 = "证件类型"
+    Range("O1").Select
+    ActiveCell.FormulaR1C1 = "证件号码"
+    Columns("A:A").ColumnWidth = 8.63
+    Columns("B:B").ColumnWidth = 8.63
+    Columns("C:D").Select
+    Selection.ColumnWidth = 8.38
+    Range("D1").Select
+    With Selection.Interior
+        .Pattern = xlSolid
+        .PatternColorIndex = xlAutomatic
+        .Color = 65535
+        .TintAndShade = 0
+        .PatternTintAndShade = 0
+    End With
+    Columns("F:F").ColumnWidth = 20.63
+    Range("F1").Select
+    With Selection.Interior
+        .Pattern = xlSolid
+        .PatternColorIndex = xlAutomatic
+        .Color = 65535
+        .TintAndShade = 0
+        .PatternTintAndShade = 0
+    End With
+ 
+    Columns("G:G").ColumnWidth = 27.13
+    Columns("H:H").ColumnWidth = 11.63
+    Columns("I:I").ColumnWidth = 6.25
+    Range("I1").Select
+    With Selection.Interior
+        .Pattern = xlSolid
+        .PatternColorIndex = xlAutomatic
+        .Color = 65535
+        .TintAndShade = 0
+        .PatternTintAndShade = 0
+    End With
+    With Selection.Interior
+        .Pattern = xlSolid
+        .PatternColorIndex = xlAutomatic
+        .Color = 5287936
+        .TintAndShade = 0
+        .PatternTintAndShade = 0
+    End With
+    With Selection.Interior
+        .Pattern = xlSolid
+        .PatternColorIndex = xlAutomatic
+        .Color = 5296274
+        .TintAndShade = 0
+        .PatternTintAndShade = 0
+    End With
+
+    Columns("J:J").ColumnWidth = 11.13
+    Range("J1").Select
+    With Selection.Interior
+        .Pattern = xlSolid
+        .PatternColorIndex = xlAutomatic
+        .Color = 5296274
+        .TintAndShade = 0
+        .PatternTintAndShade = 0
+    End With
+
+    ActiveWindow.ScrollColumn = 2
+    ActiveWindow.ScrollColumn = 3
+    ActiveWindow.ScrollColumn = 4
+    ActiveWindow.ScrollColumn = 5
+
+    Columns("K:K").ColumnWidth = 11.38
+    Range("K1").Select
+    With Selection.Interior
+        .Pattern = xlSolid
+        .PatternColorIndex = xlAutomatic
+        .Color = 5296274
+        .TintAndShade = 0
+        .PatternTintAndShade = 0
+    End With
+
+    Columns("L:L").ColumnWidth = 6.88
+    Range("L1").Select
+    With Selection.Interior
+        .Pattern = xlSolid
+        .PatternColorIndex = xlAutomatic
+        .Color = 5296274
+        .TintAndShade = 0
+        .PatternTintAndShade = 0
+    End With
+    ActiveWindow.ScrollColumn = 6
+    ActiveWindow.ScrollColumn = 7
+    Columns("M:M").ColumnWidth = 33.13
+    Range("M1").Select
+
+    ActiveWindow.ScrollColumn = 8
+    Columns("N:N").ColumnWidth = 13.38
+    Columns("O:O").ColumnWidth = 13.75
+    Range("N1").Select
+    With Selection.Interior
+        .Pattern = xlSolid
+        .PatternColorIndex = xlAutomatic
+        .Color = 65535
+        .TintAndShade = 0
+        .PatternTintAndShade = 0
+    End With
+    Range("O1").Select
+    With Selection.Interior
+        .Pattern = xlSolid
+        .PatternColorIndex = xlAutomatic
+        .Color = 65535
+        .TintAndShade = 0
+        .PatternTintAndShade = 0
+    End With
+    
+    
+       
+Dim sheet1 As Worksheet
+Dim sheet2 As Worksheet
+Dim sheet3 As Worksheet
+Dim sheet4 As Worksheet
+
+Set sheet1 = Worksheets("低保对象名册")
+Set sheet2 = Worksheets("三无名册")
+Set sheet3 = Worksheets("五保名册")
+Set sheet4 = Worksheets("比对")
+
+Dim rowNum
+row1num = sheet1.Range("A65536").End(xlUp).Row
+row2Num = sheet2.Range("A65536").End(xlUp).Row
+row3Num = sheet3.Range("A65536").End(xlUp).Row
+Dim Index
+Index = 2
+
+'系统身份证
+Dim arr, d As Object
+Dim sheetSys As Worksheet
+
+
+Set d = CreateObject("scripting.dictionary")
+With GetObject(ThisWorkbook.Path & "\系统免费电用户清单.xlsx")
+    arr = .Sheets("数据页").Range("d1").CurrentRegion
+    Set sheetSys = .Sheets("数据页")
+End With
+
+For i = 2 To UBound(arr)
+    d(arr(i, 1)) = ""
+Next
+
+
+
+For i = 7 To row1num
+
+    sheet4.Cells(Index, 1) = "低保"
+    sheet4.Cells(Index, 2) = Index - 1    '序号
+    sheet4.Cells(Index, 3) = sheet1.Cells(i, 2)  '社区
+    sheet4.Cells(Index, 4) = sheet1.Cells(i, 3)  '户名
+    sheet4.Cells(Index, 5) = sheet1.Cells(i, 4)  '性别
+    sheet4.Cells(Index, 6) = sheet1.Cells(i, 5)  '身份证
+    sheet4.Cells(Index, 7) = sheet1.Cells(i, 6)  '地址
+    sheet4.Cells(Index, 8) = sheet1.Cells(i, 7)  '证号
+    sheet4.Cells(Index, 8) = sheet1.Cells(i, 7)  '证号
+    sheet4.Cells(Index, 14) = "001"
+    
+        '身份证检查
+    Set Rng = sheetSys.Columns("D").Find(What:=CStr(sheet1.Cells(i, 5)))
+    If Rng Is Nothing Then
+        sheet4.Cells(Index, 9) = "0"
+        sheet4.Cells(Index, 10) = "#N/A"
+        sheet4.Cells(Index, 11) = "#N/A"
+        sheet4.Cells(Index, 15) = "#N/A"
+    Else
+        Set RngNext = sheetSys.Columns("D").FindNext(After:=Rng)
+        If RngNext.Address = Rng.Address Then
+          sheet4.Cells(Index, 9) = "1"
+          sheet4.Cells(Index, 10) = CStr(sheetSys.Cells(Rng.Row, 6))
+          sheet4.Cells(Index, 11) = sheetSys.Cells(Rng.Row, 1)
+          sheet4.Cells(Index, 15) = sheetSys.Cells(Rng.Row, 3)
+        Else
+          sheet4.Cells(Index, 9) = "2"
+          If sheetSys.Cells(Rng.Row, 6) > sheetSys.Cells(RngNext.Row, 6) Then
+          sheet4.Cells(Index, 10) = CStr(sheetSys.Cells(Rng.Row, 6))
+          Else
+          sheet4.Cells(Index, 10) = CStr(sheetSys.Cells(RngNext.Row, 6))
+          End If
+          sheet4.Cells(Index, 11) = sheetSys.Cells(Rng.Row, 1)
+          sheet4.Cells(Index, 15) = sheetSys.Cells(Rng.Row, 3)
+        End If
+    End If
+    
+    
+    '名字检查
+    If Not d.exists(CStr(sheet1.Cells(i, 3))) Then
+        sheet4.Cells(Index, 12) = "0"
+    Else
+        sheet4.Cells(Index, 12) = "1"
+    End If
+    
+
+    
+    Index = Index + 1
+    
+Next
+
+For i = 7 To row2Num
+
+    sheet4.Cells(Index, 1) = "三无"
+    sheet4.Cells(Index, 2) = Index - 1    '序号
+    sheet4.Cells(Index, 3) = sheet2.Cells(i, 2)  '社区
+    sheet4.Cells(Index, 4) = sheet2.Cells(i, 3)  '户名
+    sheet4.Cells(Index, 5) = sheet2.Cells(i, 4)  '性别
+    sheet4.Cells(Index, 6) = sheet2.Cells(i, 7)  '身份证
+    sheet4.Cells(Index, 7) = sheet2.Cells(i, 5)  '地址
+    sheet4.Cells(Index, 8) = sheet2.Cells(i, 6)  '证号
+    sheet4.Cells(Index, 14) = "002"
+    
+            '身份证检查
+    Set Rng = sheetSys.Columns("D").Find(What:=CStr(sheet2.Cells(i, 7)))
+    If Rng Is Nothing Then
+        sheet4.Cells(Index, 9) = "0"
+        sheet4.Cells(Index, 10) = "#N/A"
+        sheet4.Cells(Index, 11) = "#N/A"
+        sheet4.Cells(Index, 15) = "#N/A"
+    Else
+        Set RngNext = sheetSys.Columns("D").FindNext(After:=Rng)
+        If RngNext.Address = Rng.Address Then
+          sheet4.Cells(Index, 9) = "1"
+          sheet4.Cells(Index, 10) = CStr(sheetSys.Cells(Rng.Row, 6))
+          sheet4.Cells(Index, 11) = sheetSys.Cells(Rng.Row, 1)
+          sheet4.Cells(Index, 15) = sheetSys.Cells(Rng.Row, 3)
+        Else
+          sheet4.Cells(Index, 9) = "2"
+          If sheetSys.Cells(Rng.Row, 6) > sheetSys.Cells(RngNext.Row, 6) Then
+          sheet4.Cells(Index, 10) = CStr(sheetSys.Cells(Rng.Row, 6))
+          Else
+          sheet4.Cells(Index, 10) = CStr(sheetSys.Cells(RngNext.Row, 6))
+          End If
+          sheet4.Cells(Index, 11) = sheetSys.Cells(Rng.Row, 1)
+          sheet4.Cells(Index, 15) = sheetSys.Cells(Rng.Row, 3)
+        End If
+    End If
+    
+    
+    
+   If Not d.exists(CStr(sheet2.Cells(i, 3))) Then
+        sheet4.Cells(Index, 12) = "0"
+    Else
+        sheet4.Cells(Index, 12) = "1"
+    End If
+    Index = Index + 1
+Next
+
+For i = 7 To row3Num
+
+    sheet4.Cells(Index, 1) = "五保"
+    sheet4.Cells(Index, 2) = Index - 1    '序号
+    sheet4.Cells(Index, 3) = sheet3.Cells(i, 2)  '社区
+    sheet4.Cells(Index, 4) = sheet3.Cells(i, 3)  '户名
+    sheet4.Cells(Index, 5) = sheet3.Cells(i, 4)  '性别
+    sheet4.Cells(Index, 6) = sheet3.Cells(i, 7)  '身份证
+    sheet4.Cells(Index, 7) = sheet3.Cells(i, 5)  '地址
+    sheet4.Cells(Index, 8) = sheet3.Cells(i, 6)  '证号
+    sheet4.Cells(Index, 14) = "003"
+    
+
+        '身份证检查
+    Set Rng = sheetSys.Columns("D").Find(What:=CStr(sheet3.Cells(i, 7)))
+    If Rng Is Nothing Then
+        sheet4.Cells(Index, 9) = "0"
+        sheet4.Cells(Index, 10) = "#N/A"
+        sheet4.Cells(Index, 11) = "#N/A"
+        sheet4.Cells(Index, 15) = "#N/A"
+    Else
+        Set RngNext = sheetSys.Columns("D").FindNext(After:=Rng)
+        If RngNext.Address = Rng.Address Then
+          sheet4.Cells(Index, 9) = "1"
+          sheet4.Cells(Index, 10) = CStr(sheetSys.Cells(Rng.Row, 6))
+          sheet4.Cells(Index, 11) = sheetSys.Cells(Rng.Row, 1)
+          sheet4.Cells(Index, 15) = sheetSys.Cells(Rng.Row, 3)
+        Else
+          sheet4.Cells(Index, 9) = "2"
+          If sheetSys.Cells(Rng.Row, 6) > sheetSys.Cells(RngNext.Row, 6) Then
+          sheet4.Cells(Index, 10) = CStr(sheetSys.Cells(Rng.Row, 6))
+          Else
+          sheet4.Cells(Index, 10) = CStr(sheetSys.Cells(RngNext.Row, 6))
+          End If
+          sheet4.Cells(Index, 11) = sheetSys.Cells(Rng.Row, 1)
+          sheet4.Cells(Index, 15) = sheetSys.Cells(Rng.Row, 3)
+        End If
+    End If
+    
+    
+   If Not d.exists(CStr(sheet3.Cells(i, 3))) Then
+        sheet4.Cells(Index, 12) = "0"
+    Else
+        sheet4.Cells(Index, 12) = "1"
+    End If
+    Index = Index + 1
+Next
+    
+    
+End Sub
+
